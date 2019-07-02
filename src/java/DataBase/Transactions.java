@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class Transactions extends DBManager {
     
-    public boolean alta(String nombre, String apaterno, String amaterno, String fechanac, String percepcion) throws SQLException {
+    public boolean alta(String nombre, String apaterno, String amaterno, Date fechanac, double percepcion) throws SQLException {
         PreparedStatement pst = null;
         
         try {
@@ -29,8 +29,8 @@ public class Transactions extends DBManager {
             pst.setString(1, nombre);
             pst.setString(2, apaterno);
             pst.setString(3, amaterno);
-            pst.setString(4, fechanac);
-            pst.setString(5, percepcion);
+            pst.setDate(4, fechanac);
+            pst.setDouble(5, percepcion);
 
             if (pst.executeUpdate() == 1){
                 return true;
@@ -44,18 +44,18 @@ public class Transactions extends DBManager {
         return false;
     }
     
-    public List<Persona> busca(String id) throws SQLException {
+    public List<Persona> busca(int id) throws SQLException {
         PreparedStatement pst = null;
         List<Persona> ls = new ArrayList<>();
         
         try {
             String consulta = "SELECT * FROM Persona WHERE id = ?";
             pst = getConnection().prepareStatement(consulta);
-            pst.setString(1, id);
+            pst.setInt(1, id);
             
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                Persona pers = new Persona(rs.getString("id"), rs.getString("nombre"), rs.getString("apaterno"), rs.getString("amaterno"), rs.getString("fechanac"), rs.getString("percepcion"));
+                Persona pers = new Persona(rs.getInt("id"), rs.getString("nombre"), rs.getString("apaterno"), rs.getString("amaterno"), rs.getDate("fechanac"), rs.getDouble("percepcion"));
                 ls.add(pers);
             }
             rs.close();
@@ -69,13 +69,13 @@ public class Transactions extends DBManager {
         return ls;
     }
     
-    public boolean borra(String id) throws SQLException {
+    public boolean borra(int id) throws SQLException {
         PreparedStatement pst = null;
         
         try {
             String consulta = "DELETE FROM Persona WHERE id = ?";
             pst = getConnection().prepareStatement(consulta);
-            pst.setString(1, id);
+            pst.setInt(1, id);
 
             if (pst.executeUpdate() == 1){
                 return true;
@@ -99,7 +99,7 @@ public class Transactions extends DBManager {
             
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                Persona pers = new Persona(rs.getString("id"), rs.getString("nombre"), rs.getString("apaterno"), rs.getString("amaterno"), rs.getString("fechanac"), rs.getString("percepcion"));
+                Persona pers = new Persona(rs.getInt("id"), rs.getString("nombre"), rs.getString("apaterno"), rs.getString("amaterno"), rs.getDate("fechanac"), rs.getDouble("percepcion"));
                 ls.add(pers);
             }
             rs.close();

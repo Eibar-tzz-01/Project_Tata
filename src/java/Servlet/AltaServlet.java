@@ -7,7 +7,10 @@ package Servlet;
 
 import DataBase.Transactions;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -33,14 +36,19 @@ public class AltaServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, SQLException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
         
         String nombre = request.getParameter("nombre");
         String apaterno = request.getParameter("apaterno");
         String amaterno = request.getParameter("amaterno");
-        String fechanac = request.getParameter("fechanac");
-        String percepcion = request.getParameter("percepcion");
+        
+        String date_updated=request.getParameter("fechanac");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date date = sdf.parse(date_updated);
+        java.sql.Date fechanac = new java.sql.Date(date.getTime());
+
+        double percepcion = Double.parseDouble(request.getParameter("percepcion"));
 
         Transactions transact = new Transactions();
         if(transact.alta(nombre, apaterno, amaterno, fechanac, percepcion)) {
@@ -66,6 +74,8 @@ public class AltaServlet extends HttpServlet {
             processRequest(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(AltaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(AltaServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -83,6 +93,8 @@ public class AltaServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
+            Logger.getLogger(AltaServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(AltaServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

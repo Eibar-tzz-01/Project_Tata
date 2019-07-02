@@ -37,7 +37,7 @@ public class BorraServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String id = request.getParameter("id");
+        int id = Integer.parseInt(request.getParameter("id"));
         
         Transactions transact = new Transactions();
         if(transact.borra(id)) {

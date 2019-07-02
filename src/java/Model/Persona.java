@@ -5,19 +5,21 @@
  */
 package Model;
 
+import java.sql.Date;
+
 /**
  *
  * @author eibar
  */
 public class Persona {
-    private String id;
+    private int id;
     private String nombre;
     private String apaterno;
     private String amaterno;
-    private String fechanac;
-    private String percepcion;
+    private Date fechanac;
+    private double percepcion;
 
-    public Persona(String id, String nombre, String apaterno, String amaterno, String fechanac, String percepcion) {
+    public Persona(int id, String nombre, String apaterno, String amaterno, Date fechanac, double percepcion) {
         this.id = id;
         this.nombre = nombre;
         this.apaterno = apaterno;
@@ -26,11 +28,11 @@ public class Persona {
         this.percepcion = percepcion;
     }
     
-    public String getid() {
+    public int getid() {
         return id;
     }
 
-    public void setid(String id) {
+    public void setid(int id) {
         this.id = id;
     }
 
@@ -58,19 +60,19 @@ public class Persona {
         this.amaterno = amaterno;
     }
 
-    public String getFechanac() {
+    public Date getFechanac() {
         return fechanac;
     }
 
-    public void setFechanac(String fechanac) {
+    public void setFechanac(Date fechanac) {
         this.fechanac = fechanac;
     }
 
-    public String getPercepcion() {
+    public double getPercepcion() {
         return percepcion;
     }
 
-    public void setPercepcion(String percepcion) {
+    public void setPercepcion(double percepcion) {
         this.percepcion = percepcion;
     }
     
